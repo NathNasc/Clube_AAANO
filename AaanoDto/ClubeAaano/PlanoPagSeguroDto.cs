@@ -1,0 +1,19 @@
+﻿using AaanoDto.Base;
+
+namespace AaanoDto.ClubeAaano
+{
+    public class PlanoPagSeguroDto : BaseEntidadeDto
+    {
+        /// <summary>
+        /// Nome do plano cadastrado no PagSeguro
+        /// MIN.: 3 / MAX.: 100
+        /// </summary>
+        public string Nome { get; set; }
+
+        /// <summary>
+        /// Código simplificado informado no cadastro do plano no pagseguro
+        /// MIN.: 3 / MAX.: 40
+        /// </summary>
+        public string CodigoSimplificado { get; set; }
+    }
+}
