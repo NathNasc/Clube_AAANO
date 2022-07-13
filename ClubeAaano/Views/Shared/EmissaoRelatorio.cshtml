@@ -1,0 +1,55 @@
+﻿@model ClubeAaanoSite.Models.EmissaoRelatorioModel
+@using ReportViewerForMvc;
+
+@{
+    ViewBag.Title = "Emissão de relatório";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="content-header">
+        <h1>
+            Emissão de relatório
+            <small>@Model.NomeRelatorio</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Usuario/Inicio"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="~/@Model.ControllerOrigem/@Model.ViewOrigem"><i class="fa fa-file-text"></i> @Model.NomeRelatorio</a></li>
+            <li class="active"><i class="fa fa-copy "></i> Emissão: @Model.NomeRelatorio</li>
+        </ol>
+    </div>
+
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h2 class="box-title">Resultado do relatório</h2>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="form-horizontal">
+                            <div class="form-group" style="display: block; text-align:center">
+                                <div id="divRelatorio" class="table-responsive">
+                                    @Html.ReportViewer(Model.Relatorio as Microsoft.Reporting.WebForms.ReportViewer, null)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    iframe {
+        border: none;
+        margin: 0;
+        width: 100%;
+        padding-left: 15%;
+        height: 100%;
+        min-height:1000px;
+    }
+</style>
+

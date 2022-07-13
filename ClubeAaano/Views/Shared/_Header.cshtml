@@ -1,0 +1,85 @@
+﻿<header class="main-header">
+    <!-- Logo -->
+    <a href="@Url.Action("Inicio", "Usuario")" class="logo">
+        <!-- Texto com o menu escondido -->
+        <span class="logo-mini"><b>C</b>A</span>
+        <!-- Texto com o menu expandido -->
+        <span class="logo-lg"><b>Clube</b>Aaano</span>
+    </a>
+
+    <nav class="navbar navbar-static-top">
+        <!-- Botão para esconder o menu-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Esconder menu</span>
+        </a>
+
+        @*<div class="menu pull-left">
+                <a href="@Url.Action("Pedido", "Novo")" class="fa fa-files-o" title="Novo pedido"></a>
+            </div>*@
+
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-cloud-download"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">Cópia de segurança:</li>
+                        <li>
+                            <ul class="menu">
+                                <li>
+                                    <a href="@Url.Action("Backup", "RecursosBd")" target="_blank" onclick="window.open('@Url.Action("Backup", "RecursosBd")','Backup', 'width=300,height=250'); return false;">
+                                        <i class="fa fa-users text-aqua"></i> Gravar
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("RestaurarBackup", "RecursosBd")">
+                                        <i class="fa fa-warning text-yellow"></i> Restaurar
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <!-- User Account: style can be found in dropdown.less -->
+                <li class="dropdown user user-menu" style="padding-right:10px">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="~/Content/ClubeAaanoSite/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                        <span class="hidden-xs">@SessaoUsuario.SessaoLogin.NomeUsuario</span>
+                    </a>
+                    <ul class="dropdown-menu" style="right:20px">
+                        <!-- User image -->
+                        <li class="user-header">
+                            <img src="~/Content/ClubeAaanoSite/img/user2-160x160.jpg" class="img-circle">
+                            <p>
+                                @SessaoUsuario.SessaoLogin.NomeUsuario
+                            <p>
+                                @if (SessaoUsuario.SessaoLogin.Administrador)
+                                {
+                                    <b>Administrador</b>
+                                }
+                                else
+                                {
+                                    <b>Colaborador</b>
+                                }
+                            </p>
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a href="~/Usuario/Visualizar/@SessaoUsuario.SessaoLogin.IdUsuario" class="btn btn-default btn-flat">Perfil</a>
+                            </div>
+                            <div class="pull-right">
+                                <a href="~/Usuario/Logout" class="btn btn-default btn-flat">Sair</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Control Sidebar Toggle Button -->
+                @*<li>
+                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>*@
+            </ul>
+        </div>
+    </nav>
+</header>

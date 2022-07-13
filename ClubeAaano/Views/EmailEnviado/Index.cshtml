@@ -1,0 +1,186 @@
+﻿@model ClubeAaanoSite.Models.PesquisaInicialModel
+
+@{
+    ViewBag.Title = "Emails enviados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="form-horizontal">
+        <div class="content-header">
+            <h1>
+                Emails enviados
+                <small>Histórico</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="~/Usuario/Inicio"><i class="fa fa-home"></i> Inicio</a></li>
+                <li><a class="active"><i class="fa fa-envelope-open"></i> Emails enviados</a></li>
+            </ol>
+        </div>
+
+        <div class="content">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Pesquisa de emails enviados</h3>
+                        </div>
+
+                        <div class="box-body">
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-3 col-md-2 col-sm-3 col-xs-12">Enviado de</label>
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" id="txtEnvioInicial">
+                                </div>
+
+                                <label class="control-label col-lg-1 col-md-2 col-sm-3 col-xs-12">Até</label>
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" id="txtEnvioFinal">
+                                </div>
+                            </div>
+
+                            @Html.Partial("_SelecionarAssinatura")
+                            <div class="form-group">
+                                <label class="control-label col-lg-3 col-md-2 col-sm-3 col-xs-12">Apenas do assinante</label>
+                                <div class="col-lg-7 col-md-10 col-sm-9 col-xs-12">
+                                    <div class="input-group">
+                                        <input type="hidden" id="txtIdAssinatura">
+                                        <input type="text" class="form-control" autocomplete="off" id="txtNomeAssinante" readonly>
+                                        <div class="input-group-btn">
+                                            <button id="btnBuscarAssinatura" type="button" class="btn btn-primary"><i class="fa fa-search"></i> Pesquisar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @Html.Partial("_SelecionarModeloEmail")
+                            <div class="form-group">
+                                <label class="control-label col-lg-3 col-md-2 col-sm-3 col-xs-12">Modelo</label>
+                                <div class="col-lg-7 col-md-10 col-sm-9 col-xs-12">
+                                    <div class="input-group">
+                                        <input type="hidden" id="txtIdModelo">
+                                        <input type="text" class="form-control" autocomplete="off" id="txtModelo" readonly>
+                                        <div class="input-group-btn">
+                                            <button id="btnBuscarModelo" type="button" class="btn btn-primary"><i class="fa fa-search"></i> Pesquisar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-3 col-md-2 col-sm-3 col-xs-12">Envios</label>
+                                <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+                                    <select id="optSucesso" class="form-control">
+                                        <option value="">disparados</option>
+                                        <option value="true">com sucesso</option>
+                                        <option value="false">com falha</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-3 col-md-offset-2 col-sm-offset-3 col-lg-1 col-md-2 col-sm-12 col-xs-12">
+                                    <button class="btn btn-primary" id="btnBuscarEnvios"><i class="fa fa-search"></i> Buscar</button>
+                                </div>
+
+                                <label class="control-label col-lg-3 col-md-4 col-sm-3 col-xs-12">Ordenar por</label>
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    <select id="optCampoOrdemEmail" class="form-control">
+                                        <option value="DATAENVIODECRESCENTE" selected>Envio decrescente</option>
+                                        <option value="DATAENVIO">Envio</option>
+                                        <option value="NOMEASSINANTE">Assinante</option>
+                                        <option value="ASSUNTOEMAIL">Assunto</option>
+                                        <option value="SUCESSO">Sucesso</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overlay" id="divCarregando">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <h3 class="box-title">Lista de emaisl enviados</h3>
+                                </div>
+                                <div class="col-md-6 alinhadoDireita">
+                                    <h3 class="box-title" id="lbTotResultados" style="padding-right:5px"><b>Encontrados: </b></h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body table-responsive">
+                            <table class="table table-hover" id="tblResultados">
+                                <thead>
+                                    <tr>
+                                        <th>Envio</th>
+                                        <th>Assunto</th>
+                                        <th>Assinante</th>
+                                        <th>Sucesso</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                        <div class="box-footer clearfix" id="divPaginas">
+                            @*Paginação da pesquisa*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/ClubeAaanoSite/Telas/Geral.js?version=2"></script>
+<script src="~/Scripts/ClubeAaanoSite/plugins/mask/jquery.mask.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/EmailEnviado.js?version=1"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#txtEnvioInicial").mask("99/99/9999", { placeholder: "__/__/____" });
+        $("#txtEnvioFinal").mask("99/99/9999", { placeholder: "__/__/____" });
+        metodoSelecaoModeloEmail = "SelecionarModelo";
+        BuscarEmailsEnviados(1);
+
+        $("#btnBuscarEnvios").click(function () {
+            BuscarEmailsEnviados(1);
+        });
+
+        $("#btnBuscarAssinatura").click(function () {
+            if ($("#btnBuscarAssinatura").html().indexOf("Limpar") !== -1) {
+                $("#txtIdAssinatura").val("");
+                $("#txtNomeAssinante").val("");
+                $("#btnBuscarAssinatura").html("<i class='fa fa-search'></i> Pesquisar");
+            } else {
+                ExibirModelPesquisaAssinatura();
+            }
+        });
+
+        $("#btnBuscarModelo").click(function () {
+            if ($("#btnBuscarModelo").html().indexOf("Limpar") !== -1) {
+                $("#txtIdModelo").val("");
+                $("#txtModelo").val("");
+                $("#btnBuscarModelo").html("<i class='fa fa-search'></i> Pesquisar");
+            } else {
+                ExibirModelPesquisaModeloEmail();
+            }
+        });
+
+        $(document).keypress(function (e) {
+            if (e.keyCode === 13) {
+                $("#btnBuscarEnvios").click();
+            }
+        });
+    });
+</script>

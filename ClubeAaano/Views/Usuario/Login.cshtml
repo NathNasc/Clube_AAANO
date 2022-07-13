@@ -1,0 +1,72 @@
+﻿@model ClubeAaanoSite.Models.LoginModel
+
+@{
+    ViewBag.Title = "Entrar";
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Entrar</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="~/Scripts/ClubeAaanoSite/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Scripts/ClubeAaanoSite/components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/ClubeAaanoSite/css/AdminLTE.min.css">
+
+</head>
+
+@using (Html.BeginForm("Login", "Usuario", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <body class="hold-transition login-page">
+        <div class="login-box">
+            <div class="login-box-body">
+                <center>
+                    <img src="~/Content/ClubeAaanoSite/img/Logo.png" />
+                    <h3>Informe seu e-mail e senha: </h3>
+                </center>
+                <br />
+                <div class="form-group has-feedback">
+                    @Html.EditorFor(m => m.EmailLogin, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+                    @Html.ValidationMessageFor(m => m.EmailLogin, "", new { @class = "text-danger" })
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    @Html.PasswordFor(m => m.SenhaLogin, new { @class = "form-control", @placeholder = "Senha" })
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+
+                <div class="form-group ">
+                    @Html.ValidationMessage("", "", new { @class = "text-danger" })
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4 col-xs-offset-4">
+                        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                    </div>
+                </div>
+                <br />
+                @* <a href="">Esqueci minha senha</a><br>*@
+                <div style="font-size:small">
+                    @Html.ActionLink("Esqueci Minha senha", "RecuperarSenha")
+                </div>
+            </div>
+        </div>
+        <script src="~/Scripts/ClubeAaanoSite/components/jquery/dist/jquery.min.js"></script>
+        <script src="~/Scripts/ClubeAaanoSite/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    </body>
+}
+</html>
+
+<script>
+    $(document).ready(function () {
+        var retorno = '@TempData["Retorno"]';
+        if (retorno == "SENHAALTERADA") {
+            alert("Senha alterada com sucesso! Acesse seu e-mail para ver a nova senha.");
+        }
+    });
+</script>

@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "Lojas parceiras";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="form-horizontal">
+        <div class="content-header">
+            <h1>
+                Lojas parceiras
+                <small>Listagem</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="~/Usuario/Inicio"><i class="fa fa-home"></i> Inicio</a></li>
+                <li><a class="active"><i class="fa fa-hand-peace-o"></i> Lojas parceiras</a></li>
+            </ol>
+        </div>
+
+        <div class="content">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Pesquisa de lojas parceiras</h3>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-12">Nome</label>
+                                <div class="col-lg-9 col-md-10 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" placeholder="Pesquise por nome" id="txtNome">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-12">Endereço</label>
+                                <div class="col-lg-9 col-md-10 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" placeholder="Pesquise por endereço" id="txtEndereco">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-12">Telefone</label>
+                                <div class="col-lg-6 col-md-7 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" placeholder="Pesquise por telefone" id="txtTelefone">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-3 col-lg-10 col-md-10 col-sm-9 col-xs-12">
+                                    <button class="btn btn-primary" id="btnBuscarLojas"><i class="fa fa-search"></i> Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overlay" id="divCarregando">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <h3 class="box-title">Lista de lojas parceiras cadastradas</h3>
+                                </div>
+                                <div class="col-md-6 alinhadoDireita">
+                                    <a class="btn btn-primary" href="Incluir"><i class="fa fa-plus"></i> Nova loja</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body table-responsive">
+                            <table class="table table-hover" id="tblResultados">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Telefone</th>
+                                        <th>Endereço</th>
+                                        <th>Opções</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                        <div class="box-footer clearfix" id="divPaginas">
+                            @*Paginação da pesquisa*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/ClubeAaanoSite/plugins/jQueryUI/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/plugins/jQueryUI/toastr.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/Geral.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/IndexLojaParceira.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var retorno = '@TempData["Retorno"]';
+        MostrarMensagemRetorno(retorno, "A loja");
+        BuscarLojas(1);
+
+        $("#btnBuscarLojas").click(function () {
+            BuscarLojas(1);
+        });
+
+        $(document).keypress(function (e) {
+            if (e.keyCode === 13) {
+                $("#btnBuscarLojas").click();
+            }
+        });
+    });
+</script>

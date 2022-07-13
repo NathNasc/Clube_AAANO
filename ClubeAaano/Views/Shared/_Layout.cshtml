@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>@ViewBag.Title - ClubeAaano</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+
+    <link href="@Url.Content("~/Content/jQuery/jquery-ui.min.css")" rel="stylesheet" type="text/css" />
+
+    @Styles.Render("~/Content/css")
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    @Scripts.Render("~/bundles/jquery")
+
+    <div class="wrapper">
+        @Html.Partial("_Header")
+        @Html.Partial("_Sidebar")
+        @RenderBody()
+        @Html.Partial("_Footer")
+        <div class="control-sidebar-bg"></div>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

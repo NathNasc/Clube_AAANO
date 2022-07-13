@@ -1,0 +1,357 @@
+﻿@model ClubeAaanoSite.Models.InformacoesAssinaturaModel
+@using AaanoBll.Base
+
+@{
+    ViewBag.Title = "Informações da assinatura";
+    Layout = "";
+}
+
+<html>
+
+<head id="cabecalho">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Informações</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="~/Scripts/ClubeAaanoSite/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Scripts/ClubeAaanoSite/components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/ClubeAaanoSite/css/AdminLTE.min.css">
+</head>
+
+<body class="hold-transition login-page">
+    <div class="content-header">
+        <h1>
+            Informações importantes da sua assinatura
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-eye"></i> Informações da assinatura</li>
+        </ol>
+    </div>
+
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h2 class="box-title">Sua carteirinha está disponível</h2>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <p>
+                                        Com a sua carteirinha de identificação você pode aproveitar o clube de descontos da AAANO, basta
+                                        apresentar nos estabelecimentos citados abaixo e assim resgata as promoções do Clube.
+                                    </p>
+
+                                    <p>
+                                        Lembre-se que as promoção só pendem ser resgatadas com <b>um plano ativo</b>, ou seja, todo mês todas elas estarão disponíveis para você resgatar
+                                        se o pagamento for processado sem problemas, então fique de olho na sua caixa de e-mail para eventuais problemas com o cartão.
+                                    </p>
+
+                                    <p>
+                                        Caso não queira imprimir a carteirinha você pode mostrá-la na tela do seu celular ou informar o código descrito abaixo do QR code.
+                                        Se quiser salvá-la em seu celular, clique em Imprimir e salve como PDF
+                                    </p>
+
+                                    <br />
+                                    <p>Clique no botão abaixo para imprimir/salvar a sua carteirinha e aproveitar as vantagens do Clube </p>
+
+                                    <button type="button" id="btnImprimirCarteirinha" onclick="ImprimirCarteirinha()" class="btn btn-primary">
+                                        <i class="fa fa-print"></i>
+                                        Imprimir carteirinha
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12" id="divCarteirinha">
+                <div class="box box-primary">
+                    <div class="box-body box-profile">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <img class="img-responsive" src="~/Content/ClubeAaanoSite/img/Logo mini.png" width="100" style="padding-left:0;border-left:0" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4" style="padding-top:8px">
+                                <img class="profile-user-img img-responsive" style="width:90px" src="data:image/png;base64,@Model.QrCodeBase64" alt="Código da assinatura">
+                                <h5 class="profile-username text-center">@Model.AssinaturaPagSeguroModel.CodigoSimplificado</h5>
+                            </div>
+
+                            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+                                <ul class="list-group list-group-unbordered">
+                                    <li class="list-group-item" style="font-size:12px">
+                                        <b>Nome: </b> @Model.AssinaturaPagSeguroModel.NomeAssinate
+                                    </li>
+                                    <li class="list-group-item" style="font-size:12px">
+                                        <b>Plano: </b> @Model.AssinaturaPagSeguroModel.ReferenciaPlano
+                                    </li>
+                                    <li class="list-group-item" style="font-size:12px">
+                                        <b>Assinatura: </b> @Model.AssinaturaPagSeguroModel.Criacao &nbsp;
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h2 class="box-title">Promoções disponíveis</h2>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-horizontal">
+
+                            @if (Model.ListaPromocoes.Count() <= 0)
+                            {
+                                <p>
+                                    Este plano não oferece nenhuma promoção, mas fique atento aos sorteios de brindes e possíveis descontos em eventos!
+                                    <br />
+                                    <br />
+                                    <b>Acompanhe em nossas redes sociais:</b>
+                                    <br />
+                                    <a href="https://www.facebook.com/aaanovaodessa/"><i class="fa fa-facebook-square"></i> Facebook AAANO</a>
+                                    <br />
+                                    <a href="https://www.instagram.com/aaanovaodessa/"><i class="fa fa-instagram"></i> Instagram AAANO</a>
+                                </p>
+
+
+                            }
+                            else
+                            {
+                                <p>
+                                    Aqui estão todas as promoções e lojas que você pode aproveitas no clube de desconto. Se tiver alguma dúvida você pode entrar em contato com a loja
+                                    ou se preferir nos envie um email: contato@aaano.com.br, será um prazer esclarecer todas as suas dúvidas. <strong>Corra e aproveite os seus descontos!</strong>
+                                </p>
+                            }
+
+                            <div class="row">
+                                @for (int i = 0; i < Model.ListaPromocoes.Count; i++)
+                                {
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <section class="invoice">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <h2 class="page-header">
+                                                        <i class="fa fa-shopping-cart"></i> @Model.ListaPromocoes[i].NomeLojaParceira
+                                                        <small class="pull-right"><b>Telefone:</b> @UtilitarioBll.RetornarTelefoneFormatado(Model.ListaPromocoes[i].TelefoneLojaParceira)</small>
+                                                    </h2>
+                                                </div>
+                                            </div>
+
+                                            <div class="row invoice-info">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <strong class="text-primary">@Model.ListaPromocoes[i].Resumo</strong> <br />
+                                                    @Html.Raw(@Model.ListaPromocoes[i].Detalhes)
+                                                    <strong>Endereço: </strong> @Model.ListaPromocoes[i].EnderecoLojaParceira
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+
+                                    if (i % 2 != 0)
+                                    {
+                                        <div class="row"></div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h2 class="box-title">Seus dados</h2>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-horizontal">
+
+                            <p>
+                                É importante manter os dados atualizados e fique tranquilo, eles não serão disponibilizados a nenhuma loja parceira, usamos apenas
+                                para o controle dos resgates e entrega de brindes.
+                            </p>
+
+                            <p>
+                                Os dados que temos são os listados abaixo, caso encontre alguma informação incorreta você pode solicitar
+                                a correção através do email contato@aaano.com.br.
+                            </p>
+
+                            <br />
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.NomeAssinate, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.NomeAssinate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.NomeAssinate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.Telefone, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.Telefone, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.Telefone, "", new { @class = "text-danger" })
+                                </div>
+
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.Email, new { @class = "control-label col-lg-2 col-md-1 col-sm-3 col-xs-12" })
+                                <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.Email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <hr class="linhaPontilhada" />
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.Cep, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-11" })
+                                <div class="col-lg-3 col-md-4 col-sm-7 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.Cep, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.Cep, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.Logradouro, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                <div class="col-lg-9 col-md-10 col-sm-9 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.Logradouro, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.Logradouro, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.Bairro, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.Bairro, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.Bairro, "", new { @class = "text-danger" })
+                                </div>
+
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.Cidade, new { @class = "control-label col-lg-1 col-md-2 col-sm-3 col-xs-12" })
+                                <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.Cidade, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.Cidade, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.Numero, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.Numero, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.Numero, "", new { @class = "text-danger" })
+                                </div>
+
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.Complemento, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.Complemento, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.Complemento, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.Estado, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.Estado, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.Estado, "", new { @class = "text-danger" })
+                                </div>
+
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.Pais, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.Pais, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.Pais, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <hr class="linhaPontilhada" />
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.CodigoSimplificado, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.CodigoSimplificado, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.CodigoSimplificado, "", new { @class = "text-danger" })
+                                </div>
+
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.ReferenciaPlano, new { @class = "control-label col-lg-3 col-md-4 col-sm-3 col-xs-12" })
+                                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.ReferenciaPlano, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.ReferenciaPlano, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            @{
+                                List<SelectListItem> listaStatus = new List<SelectListItem>();
+                                for (int i = 1; i < Enum.GetNames(typeof(AaanoEnum.PagSeguroEnum.StatusAssinatura)).Length; i++)
+                                {
+                                    listaStatus.Add(new SelectListItem()
+                                    {
+                                        Text = ((AaanoEnum.PagSeguroEnum.StatusAssinatura)i).ToString().Replace("_", " "),
+                                        Value = i.ToString()
+                                    });
+                                }
+                            }
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.Status, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                    @Html.DropDownListFor(m => m.AssinaturaPagSeguroModel.Status, listaStatus, new { @class = "form-control", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.Status, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.Criacao, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.Criacao, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.Criacao, "", new { @class = "text-danger" })
+                                </div>
+
+                                @Html.LabelFor(m => m.AssinaturaPagSeguroModel.UltimoEnventoRegistrado, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+                                    @Html.EditorFor(m => m.AssinaturaPagSeguroModel.UltimoEnventoRegistrado, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.AssinaturaPagSeguroModel.UltimoEnventoRegistrado, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/Scripts/ClubeAaanoSite/plugins/jQueryUI/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/plugins/jQueryUI/jquery-ui.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/Geral.js"></script>
+
+<script>
+    function ImprimirCarteirinha() {
+        var original = document.body.innerHTML;
+        var impressao = "<html>" +
+            "<div style='height:250px;width:350px'>" +
+            document.getElementById("cabecalho").innerHTML +
+            document.getElementById("divCarteirinha").innerHTML +
+            "</div>" +
+            "</html>";
+        document.body.innerHTML = impressao;
+        window.print();
+
+        setTimeout(function () {
+            document.body.innerHTML = original;
+        }, 2000);
+    }
+
+    $(document).ready(function () {
+        $("#AssinaturaPagSeguroModel_Telefone").val(FormatarTelefone($("#AssinaturaPagSeguroModel_Telefone").val()));
+        $("#AssinaturaPagSeguroModel_Cep").val(FormatarCep($("#AssinaturaPagSeguroModel_Cep").val()));
+    });
+</script>

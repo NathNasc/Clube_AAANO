@@ -1,0 +1,181 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Resumo das atividades
+            <small>Resumo geral das atividades</small>
+        </h1>
+
+        <div class="overlay" id="divCarregando">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
+
+        <ol class="breadcrumb">
+            <li><a href="~/Usuario/Inicio"><i class="fa fa-dashboard"></i> Início</a></li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green"><i class="fa fa-users"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Assinaturas ativas</span>
+                        <h3 id="labAssinaturasAtivas">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-hand-peace-o"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Lojas parceiras</span>
+                        <h3 id="labLojasParceiras">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="fa fa-send-o"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Brindes não enviados</span>
+                        <h3 id="labBrindesNaoEnviados">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-gray-active"><i class="fa fa-user-times"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Total de cancelamentos</span>
+                        <h3 id="labTotalCancelamento">0</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-green-active">
+                    <div class="inner">
+                        <h3 id="labNovasAssinaturas">0</h3>
+                        <p>Novas assinaturas (30 dias)</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-user-plus"></i>
+                    </div>
+                    <a href="~/AssinaturaPagSeguro/IndexUltimasAssinaturas" class="small-box-footer">Mais informações <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3 id="labCuponsResgatados">0</h3>
+                        <p>Cupons resgatados (30 dias)</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-files-o"></i>
+                    </div>
+                    <a href="~/ResgatePromocao/UltimosResgates" class="small-box-footer">Mais informações <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-yellow-active">
+                    <div class="inner">
+                        <h3 id="labPagamentosPendentes">0</h3>
+                        <p>Pagamentos pendentes</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-warning"></i>
+                    </div>
+                    <a href="~/AssinaturaPagSeguro/IndexPagamentosPendentes" class="small-box-footer">Mais informações <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-gray-active">
+                    <div class="inner">
+                        <h3 id="labAssinaturasCanceladas">0</h3>
+                        <p>Cancelamentos via assinante (30 dias)</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-ban"></i>
+                    </div>
+                    <a href="~/AssinaturaPagSeguro/IndexCanceladas" class="small-box-footer">Mais informações <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <section class="col-lg-7 col-md-7 col-sm-12 col-xs-12 connectedSortable">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs pull-right">
+                        <li><a href="#assinaturasLinha" data-toggle="tab">Assinaturas</a></li>
+                        <li class="active"><a href="#assinaturasPizza" data-toggle="tab">Planos (%)</a></li>
+                        <li class="pull-left header"><i class="fa fa-pie-chart"></i> Análise de assinaturas</li>
+                    </ul>
+                    <div class="tab-content no-padding">
+                        <div class="chart tab-pane" id="assinaturasLinha" style="position: relative; height: 300px;"></div>
+                        <div class="chart tab-pane active" id="assinaturasPizza" style="position: relative; height: 300px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="col-lg-5 col-md-5 col-sm-12 col-xs-12 connectedSortable">
+                <div class="box box-solid bg-teal-gradient">
+                    <div class="box-header">
+                        <h3 class="box-title"><i class="fa fa-files-o"></i>  Resgates do mês</h3>
+                        <div class="box-tools pull-right">
+                        </div>
+                    </div>
+                    <div class="box-body border-radius-none">
+                        <div class="chart" id="resgatesLinha" style="height: 280px;"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/inicio")
+}
+
+<script src="~/Scripts/ClubeAaanoSite/Telas/Geral.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/Inicio.js"></script>
+
+<script>
+    $(document).ready(function () {
+        ObterInformacoesDashboard();
+
+        var retorno = '@TempData["Retorno"]';
+        toastr.options = {
+            "showDuration": "400",
+            "hideDuration": "600",
+            "timeOut": "3000",
+            "positionClass": "toast-top-right",
+            "preventDuplicates": "true"
+        }
+
+        switch (retorno) {
+            case "BACKUPRESTAURADO":
+                toastr.success("Backup restaurado com sucesso!", "Tudo certo!");
+                break;
+
+            default:
+                break;
+        }
+    });
+</script>

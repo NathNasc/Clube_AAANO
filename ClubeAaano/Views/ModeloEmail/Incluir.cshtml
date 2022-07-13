@@ -1,0 +1,124 @@
+﻿@model ClubeAaanoSite.Models.ModeloEmailModel
+
+@{
+    ViewBag.Title = "Incluir modelo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Scripts/ClubeAaanoSite/components/bootstrap-summernote/dist/summernote.min.css" rel="stylesheet" />
+<script src="~/Scripts/ClubeAaanoSite/plugins/jQueryUI/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/components/bootstrap-summernote/dist/summernote.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/components/bootstrap-summernote/dist/lang/summernote-pt-BR.min.js"></script>
+
+<div class="content-wrapper">
+    <div class="content-header">
+        <h1>
+            Modelo de Email
+            <small>Incluir</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Usuario/Inicio"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="~/ModeloEmail/Index"><i class="fa fa-male"></i> Modelos de email</a></li>
+            <li class="active"><i class="fa fa-pencil"></i> Incluir</li>
+        </ol>
+    </div>
+
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h2 class="box-title">Incluir modelo de email</h2>
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        <div class="box-body">
+                            <div class="form-horizontal">
+
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Assunto, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-8 col-md-9 col-sm-9 col-xs-12">
+                                        @Html.EditorFor(m => m.Assunto, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(m => m.Assunto, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <br />
+
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-9 col-xs-12 col-lg-offset-1">
+                                        <h3>Corpo do email &nbsp; <small>Enviado aos assinantes</small></h3>
+                                    </div>
+
+                                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 col-lg-offset-2">
+                                        @Html.TextAreaFor(m => m.Corpo, new
+                                            {
+                                                @class = "textarea",
+                                                @autocomplete = "off",
+                                                @style = "width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"
+                                            })
+                                        @Html.ValidationMessageFor(m => m.Corpo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <a class="btn btn-default" href="~/Email/Index"><i class="fa fa-mail-reply"></i> Cancelar</a>
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Gravar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/ClubeAaanoSite/Telas/ModeloEmail.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#Corpo").summernote({
+            lang: 'pt-BR',
+            height: 300,
+            minHeight: null,
+            maxHeight: null,
+            focus: true,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link']],
+                ['view', ['fullscreen', 'codeview']],
+                ['personalizado', ['nome', 'carteirinha', 'ultimoPagamento',
+                    'emailAaano', 'facebookAaano', 'instagramAaano', 'siteAaano']]
+            ],
+            buttons: {
+                nome: tagNome,
+                carteirinha: tagCarteirinha,
+                ultimoPagamento: tagUltimoPagamento,
+                emailAaano: tagEmailAaano,
+                facebookAaano: tagFacebookAaano,
+                instagramAaano: tagInstagramAaano,
+                siteAaano: tagSiteAaano,
+            }
+        });        
+
+        $(document).keypress(function (e) {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    });
+</script>

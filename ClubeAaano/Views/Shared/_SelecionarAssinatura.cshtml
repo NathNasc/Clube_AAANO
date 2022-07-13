@@ -1,0 +1,92 @@
+﻿<div class="modal fade" id="modalSelecionarAssinatura">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Pesquise e selecione a assinatura desejada</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-12">Nome</label>
+                    <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" autocomplete="off" placeholder="Pesquise por nome" id="txtNomeAssinanteSelecao">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-12">Telefone</label>
+                    <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" autocomplete="off" placeholder="Pesquise por telefone" id="txtTelefoneAssinanteSelecao">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-md-offset-2 col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        <button class="btn btn-primary" id="btnBuscarAssinaturasSelecao" type="button"><i class="fa fa-search"></i> Buscar</button>
+                        <button id="btnSincronizar" class="btn btn-default" type="button"><i class="fa fa-retweet"></i> Sincronizar</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover" id="tblSelecionarAssinatura">
+                        <thead>
+                            <tr>
+                                <th>Assinante</th>
+                                <th>Cód. Plano</th>
+                                <th>Telefone</th>
+                                <th>Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div class="clearfix" id="divPaginasSelecaoAssinante">
+                    @*Paginação da pesquisa*@
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/ClubeAaanoSite/Telas/SelecionarAssinatura.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/SincronizacaoPagSeguro.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#txtTelefoneAssinanteSelecao").mask("(99) 9999-99999", { placeholder: "(__) _____-____" });
+        $("#btnBuscarAssinaturasSelecao").click(function () { BuscarAssinaturasParaSelecao(1); });
+        $('#btnSincronizar').click(function () { SincronizarAssinaturas(); });
+
+        $("#txtTelefoneAssinanteSelecao").keypress(function (event) {
+            // Se for a tecla enter
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode === '13' || keycode === 13) {
+                $("#btnBuscarAssinaturasSelecao").click();
+                $("#txtTelefoneAssinanteSelecao").focus();
+            }
+        });
+
+        $("#txtNomeAssinanteSelecao").keypress(function (event) {
+            // Se for a tecla enter
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode === '13' || keycode === 13) {
+                $("#btnBuscarAssinaturasSelecao").click();
+                $("#txtNomeAssinanteSelecao").focus();
+            }
+        });
+
+        $(document).keypress(function (e) {
+            var keycode = (e.keyCode ? e.keyCode : e.which);
+            if (keycode === 13 || keycode === '13') {
+                return false;
+                e.preventDefault();
+            }
+        });
+    });
+</script>

@@ -1,0 +1,120 @@
+﻿@model ClubeAaanoSite.Models.ListaPermissaoUsuarioModel
+
+@{
+    ViewBag.Title = "Editar usuário";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+    <div class="content-header">
+        <h1>
+            Usuário
+            <small>Editar permissões</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Usuario/Inicio"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="~/Usuario/Index"><i class="fa fa-male"></i> Usuários</a></li>
+            <li class="active"><i class="fa fa-pencil"></i> Editar permissões</li>
+        </ol>
+    </div>
+
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h2 class="box-title">Editar permissões do usuário</h2>
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        <div class="box-body">
+                            <div class="form-horizontal">
+
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(m => m.IdUsuario)
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.IdUsuario, new { @class = "control-label col-lg-2 col-md-4 col-sm-4 col-xs-12" })
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                        @Html.EditorFor(m => m.NomeUsuario, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(m => m.NomeUsuario, "", new { @class = "text-danger", @readonly = "readonly" })
+                                    </div>
+                                </div>
+
+                                @Html.Partial("_SelecionarLojaParceira")
+
+                                <div class="form-group">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 col-lg-offset-2 col-md-offset-4">
+                                        <button id="btnBuscarLoja" type="button" class="btn btn-primary"><i class="fa fa-search"></i> Adicionar loja</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped" id="tblLojas">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Loja</th>
+                                                        <th>Opções</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (int i = 0; i < Model.ListaPermissoes.Count; i++)
+                                                    {
+                                                        <tr id="@Model.ListaPermissoes[i].IdLojaParceira">
+                                                            <td>
+                                                                @Html.HiddenFor(p => p.ListaPermissoes[i].NomeLoja)
+                                                                @Model.ListaPermissoes[i].NomeLoja
+                                                            </td>
+                                                            <td>
+                                                                @Html.HiddenFor(p => p.ListaPermissoes[i].IdLojaParceira)
+                                                                @Html.HiddenFor(p => p.ListaPermissoes[i].Excluir)
+
+                                                                <button class="btn btn-sm btn-danger" type="button"
+                                                                        onclick="RemoverLoja('@i', '@Model.ListaPermissoes[i].IdLojaParceira')">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-3">
+                                        <a class="btn btn-default" href="~/Usuario/Index"><i class="fa fa-mail-reply"></i> Cancelar</a>
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Gravar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/ClubeAaanoSite/plugins/mask/jquery.mask.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/Geral.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/EditarPermissaoPorUsuario.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#btnBuscarLoja").click(function () {
+            ExibirModelPesquisaLojaParceira();
+        });
+
+        $(document).keypress(function (e) {
+            if (e.keyCode === 13 || e.keyCode === '13') {
+                e.preventDefault();
+                return false;
+            }
+        });
+    });
+</script>

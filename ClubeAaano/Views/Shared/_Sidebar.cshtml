@@ -1,0 +1,167 @@
+﻿<aside class="main-sidebar">
+    <section class="sidebar">
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="~/Content/ClubeAaanoSite/img/photo1.png" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p>@SessaoUsuario.SessaoLogin.NomeUsuario</p>
+            </div>
+        </div>
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">Opções de cadastro</li>
+
+            <li class="@Html.IsSelected(controller: "Resgate")">
+                <a href="@Url.Action("Index", "ResgatePromocao")"><i class="fa fa-qrcode"></i><span> &nbsp;Resgate de cupom</span></a>
+            </li>
+
+            @if (SessaoUsuario.SessaoLogin.Administrador)
+            {
+                <li class="@Html.IsSelected(controller: "Promocao")">
+                    <a href="@Url.Action("Index", "Promocao")"><i class="fa fa-cart-arrow-down"></i><span> &nbsp;Promoções</span></a>
+                </li>
+
+                <li class="@Html.IsSelected(controller: "Brindes")">
+                    <a href="@Url.Action("Index", "Brinde")"><i class="fa fa-gift"></i><span> &nbsp;Brindes</span></a>
+                </li>
+
+                <li class="treeview @Html.IsSelected(controller: "Assinatura")">
+                    <a href="@Url.Action("Assinatura")">
+                        <i class="fa fa-users"></i> <span>Assinaturas</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="@Html.IsSelected(action: "AssinaturaPagSeguro")"><a href="@Url.Action("Index", "AssinaturaPagSeguro")"><i class="fa fa-users"></i> &nbsp;Assinaturas</a></li>
+                        <li class="@Html.IsSelected(action: "ResgatesRegistrados")"><a href="@Url.Action("ResgatesRegistrados", "ResgatePromocao")"><i class="fa fa-ticket"></i> &nbsp;Resgates</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview @Html.IsSelected(controller: "Cadastros")">
+                    <a href="@Url.Action("Cadastros")">
+                        <i class="fa fa-folder-open-o"></i> <span>Cadastros</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="@Html.IsSelected(action: "Loja")"><a href="@Url.Action("Index", "LojaParceira")"><i class="fa fa-hand-peace-o"></i> &nbsp;Lojas parceiras</a></li>
+                        <li class="@Html.IsSelected(action: "Planos")"><a href="@Url.Action("Index", "PlanoPagSeguro")"><i class="fa fa-files-o"></i> &nbsp;Planos Pagseguro</a></li>
+                        <li class="@Html.IsSelected(action: "Usuario")"><a href="@Url.Action("Index", "Usuario")"><i class="fa fa-user-circle"></i> &nbsp;Usuários</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview @Html.IsSelected(controller: "ModeloEmail")">
+                    <a href="@Url.Action("ModeloEmail")">
+                        <i class="fa fa-paper-plane-o"></i> <span>Emails</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="@Html.IsSelected(action: "ModeloEmail")"><a href="@Url.Action("Index", "ModeloEmail")"><i class="fa fa-envelope"></i> &nbsp;Modelos de email</a></li>
+                        <li class="@Html.IsSelected(action: "ModeloBoasVindas")"><a href="@Url.Action("Editar", "ModeloEmail", new { id = Utilidades.RetornarIdEmailBoasVindas()})"><i class="fa fa-hand-spock-o"></i> &nbsp;Boas vindas</a></li>
+                        <li class="@Html.IsSelected(action: "ModeloCobranca")"><a href="@Url.Action("Editar", "ModeloEmail",  new { id = Utilidades.RetornarIdEmailCobranca()})"><i class="fa fa-bullhorn"></i> &nbsp;Cobrança</a></li>
+                        <li class="@Html.IsSelected(action: "EmailEnviado")"><a href="@Url.Action("Index", "EmailEnviado")"><i class="fa fa-envelope-open"></i> &nbsp;Enviados</a></li>
+                    </ul>
+                </li>
+            }
+
+            @*<li class="header">Relatórios</li>
+
+                <li class="treeview @Html.IsSelected(controller: "Relatorios")">
+                    <a href="@Url.Action("Listagens")">
+                        <i class="fa fa-file-text"></i> <span> &nbsp;Listagens básicas</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-exchange"></i> Operações
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="@Html.IsSelected(action: "ListagemPedidosResumida")"><a href="@Url.Action("ListagemPedidosResumida", "RelatoriosListagem")"><i class="fa fa-files-o"></i> &nbsp;Pedidos resumidos</a></li>
+                                <li class="@Html.IsSelected(action: "ListagemPedidosDetalhada")"><a href="@Url.Action("ListagemPedidosDetalhada", "RelatoriosListagem")"><i class="fa fa-files-o"></i> &nbsp;Pedidos detalhados</a></li>
+                                <li class="@Html.IsSelected(action: "ListagemEntregas")"><a href="@Url.Action("ListagemEntregas", "RelatoriosListagem")"><i class="fa fa-cubes"></i> &nbsp;Entregas</a></li>
+                                <li class="@Html.IsSelected(action: "ListagemContaPagar")"><a href="@Url.Action("ListagemContaPagar", "RelatoriosListagem")"><i class="fa fa-money"></i> &nbsp;Contas a pagar</a></li>
+                                <li class="@Html.IsSelected(action: "ListagemContasReceber")"><a href="@Url.Action("ListagemContaReceber", "RelatoriosListagem")"><i class="fa fa-money"></i> &nbsp;Contas a receber</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-clipboard"></i> Cadastros
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="@Html.IsSelected(action: "ListagemClientes")"><a href="@Url.Action("ListagemClientes", "RelatoriosListagem")"><i class="fa fa-users"></i> &nbsp;Clientes</a></li>
+                                <li class="@Html.IsSelected(action: "ListagemProdutos")"><a href="@Url.Action("ListagemProdutos", "RelatoriosListagem")"><i class="fa fa-tags"></i> &nbsp;Produtos</a></li>
+                                <li class="@Html.IsSelected(action: "ListagemFornecedores")"><a href="@Url.Action("ListagemFornecedores", "RelatoriosListagem")"><i class="fa fa-truck"></i> &nbsp;Fornecedores</a></li>
+                                <li class="@Html.IsSelected(action: "ListagemTaxaEntrega")"><a href="@Url.Action("ListagemTaxaEntrega", "RelatoriosListagem")"><i class="fa fa-motorcycle"></i> &nbsp;Taxas de entrega</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="treeview @Html.IsSelected(controller: "Analises")">
+                    <a href="@Url.Action("Analises")">
+                        <i class="fa fa-line-chart"></i> <span> &nbsp;Análises</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-trophy"></i> Ranking
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="@Html.IsSelected(action: "MelhoresProdutos")"><a href="@Url.Action("MelhoresProdutos", "RelatoriosAnaliticos")"><i class="fa fa-tachometer"></i> &nbsp;Melhores produtos</a></li>
+                                <li class="@Html.IsSelected(action: "MelhoresClientes")"><a href="@Url.Action("MelhoresClientes", "RelatoriosAnaliticos")"><i class="fa fa-diamond"></i> &nbsp;Melhores clientes</a></li>
+                                <li class="@Html.IsSelected(action: "MelhoresMotoboys")"><a href="@Url.Action("MelhoresMotoboys", "RelatoriosAnaliticos")"><i class="fa fa-child"></i> &nbsp;Melhores motoboys</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-calculator"></i> Contas
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="@Html.IsSelected(action: "RelacaoDiariaContas")"><a href="@Url.Action("RelacaoDiariaContas", "RelatoriosAnaliticos")"><i class="fa fa-flag-o"></i> &nbsp;Relação diária</a></li>
+                                <li class="@Html.IsSelected(action: "RelacaoMensalContas")"><a href="@Url.Action("RelacaoMensalContas", "RelatoriosAnaliticos")"><i class="fa fa-flag"></i> &nbsp;Relação mensal</a></li>
+                                <li class="@Html.IsSelected(action: "ContasPorFornecedor")"><a href="@Url.Action("ContasPorFornecedor", "RelatoriosAnaliticos")"><i class="fa fa-truck"></i> &nbsp;Por fornecedor</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-files-o"></i> Pedidos
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="@Html.IsSelected(action: "PedidosPorBairro")"><a href="@Url.Action("PedidosPorBairro", "RelatoriosAnaliticos")"><i class="fa fa-map-o"></i> &nbsp;Por bairro</a></li>
+                                <li class="@Html.IsSelected(action: "AnaliseSemanalPedidos")"><a href="@Url.Action("AnaliseSemanalPedidos", "RelatoriosAnaliticos")"><i class="fa fa-bar-chart-o"></i> &nbsp;Evolução semanal</a></li>
+                                <li class="@Html.IsSelected(action: "RelacaoDiariaContas")"><a href="@Url.Action("RelacaoDiariaContas", "RelatoriosAnaliticos")"><i class="fa fa-pie-chart"></i> &nbsp;Evolução mensal</a></li>
+                                <li class="@Html.IsSelected(action: "RelacaoDiariaContas")"><a href="@Url.Action("EvolucaoAnualPedidos", "RelatoriosAnaliticos")"><i class="fa fa-area-chart"></i> &nbsp;Evolução anual</a></li>
+                                <li class="@Html.IsSelected(action: "AnaliseMensalPedidos")"><a href="@Url.Action("AnaliseMensalPedidos", "RelatoriosAnaliticos")"><i class="fa fa-pie-chart"></i> &nbsp;Evolução mensal</a></li>
+                                <li class="@Html.IsSelected(action: "AnaliseAnualPedidos")"><a href="@Url.Action("AnaliseAnualPedidos", "RelatoriosAnaliticos")"><i class="fa fa-area-chart"></i> &nbsp;Evolução anual</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>*@
+        </ul>
+    </section>
+</aside>

@@ -1,0 +1,169 @@
+﻿@model ClubeAaanoSite.Models.PesquisaInicialModel
+
+@{
+    ViewBag.Title = "Brindes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="form-horizontal">
+        <div class="content-header">
+            <h1>
+                Brindes
+                <small>Listagem</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="~/Usuario/Inicio"><i class="fa fa-home"></i> Inicio</a></li>
+                <li><a class="active"><i class="fa fa-gift"></i> Brindes</a></li>
+            </ol>
+        </div>
+
+        <div class="content">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Pesquisa de brindes</h3>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="control-label col-lg-3 col-md-2 col-sm-3 col-xs-12">Sorteado de</label>
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" id="txtSorteioInicial">
+                                </div>
+
+                                <label class="control-label col-lg-1 col-md-2 col-sm-3 col-xs-12">Até</label>
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" id="txtSorteioFinal">
+                                </div>
+                            </div>
+
+                            @Html.Partial("_SelecionarAssinatura")
+                            <div class="form-group">
+                                <label class="control-label col-lg-3 col-md-2 col-sm-3 col-xs-12">Apenas do assinante</label>
+                                <div class="col-lg-7 col-md-10 col-sm-9 col-xs-12">
+                                    <div class="input-group">
+                                        <input type="hidden" id="txtIdAssinatura">
+                                        <input type="text" class="form-control" autocomplete="off" id="txtNomeAssinante" readonly>
+                                        <div class="input-group-btn">
+                                            <button id="btnBuscarAssinatura" type="button" class="btn btn-primary"><i class="fa fa-search"></i> Pesquisar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-3 col-md-2 col-sm-3 col-xs-12">Descrição</label>
+                                <div class="col-lg-7 col-md-10 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" id="txtDescricao">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-3 col-md-5 col-sm-6 col-xs-10">Apenas pendentes de entrega</label>
+                                <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                                    <input type="checkbox" class="checkbox" id="chEntregue" style="margin-top:5px">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-3 col-md-offset-2 col-sm-offset-3 col-lg-2 col-md-2 col-sm-10 col-xs-12">
+                                    <button class="btn btn-primary" id="btnBuscarBrindes"><i class="fa fa-search"></i> Buscar</button>
+                                </div>
+
+                                <label class="control-label col-lg-2 col-md-4 col-sm-3 col-xs-12">Ordenar por</label>
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    <select id="optCampoOrdem" class="form-control">
+                                        <option value="DESCRICAO">Descrição</option>
+                                        <option value="SORTEIO" selected>Sorteio</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overlay" id="divCarregando">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <h3 class="box-title">Lista de brindes encontrados</h3>
+                                </div>
+                                <div class="col-md-6 alinhadoDireita">
+                                    <a class="btn btn-primary" href="Incluir"><i class="fa fa-plus"></i> Novo brinde</a>
+                                    <a class="btn btn-default" href="SortearNovo"><i class="fa fa-trophy"></i> Novo sorteio</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body table-responsive">
+                            <table class="table table-hover" id="tblResultados">
+                                <thead>
+                                    <tr>
+                                        <th>Descrição</th>
+                                        <th>Sorteio</th>
+                                        <th>Ganhador</th>
+                                        <th>Entregue</th>
+                                        <th>Opções</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                        <div class="box-footer clearfix" id="divPaginas">
+                            @*Paginação da pesquisa*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/ClubeAaanoSite/plugins/jQueryUI/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/plugins/jQueryUI/toastr.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/plugins/mask/jquery.mask.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/Geral.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/IndexBrinde.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var retorno = '@TempData["Retorno"]';
+        MostrarMensagemRetorno(retorno, "O brinde");
+
+        $("#txtSorteioInicial").mask("99/99/9999", { placeholder: "__/__/____" });
+        $("#txtSorteioFinal").mask("99/99/9999", { placeholder: "__/__/____" });
+
+         var filtros = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Filtros));
+        LerFiltroIniciais(filtros, BuscarBrindes);
+
+        $("#btnBuscarBrindes").click(function () {
+            BuscarBrindes(1);
+        });
+
+        $("#btnBuscarAssinatura").click(function () {
+            if ($("#btnBuscarAssinatura").html().indexOf("Limpar") !== -1) {
+                $("#txtIdAssinatura").val("");
+                $("#txtNomeAssinante").val("");
+                $("#btnBuscarAssinatura").html("<i class='fa fa-search'></i> Pesquisar");
+            } else {
+                ExibirModelPesquisaAssinatura();
+            }
+        });
+
+        $(document).keypress(function (e) {
+            if (e.keyCode === 13) {
+                $("#btnBuscarBrindes").click();
+            }
+        });
+    });
+</script>

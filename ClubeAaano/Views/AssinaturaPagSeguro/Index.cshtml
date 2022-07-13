@@ -1,0 +1,244 @@
+﻿@model ClubeAaanoSite.Models.PesquisaInicialModel
+
+@{
+    ViewBag.Title = "Assinaturas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="form-horizontal">
+        <div class="content-header">
+            <h1>
+                Assinaturas
+                <small>Listagem</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="~/Usuario/Inicio"><i class="fa fa-home"></i> Inicio</a></li>
+                <li><a class="active"><i class="fa fa-users"></i> Assinaturas</a></li>
+            </ol>
+        </div>
+
+        <div class="content">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Pesquisa de assinaturas</h3>
+                        </div>
+                        <div class="box-body">
+
+                            <h4 class="text-primary">Filtrar por dados do assinante</h4>
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-12">Nome</label>
+                                <div class="col-lg-9 col-md-10 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" placeholder="Pesquise por nome" id="txtNome">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-12">Email</label>
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" placeholder="Pesquise por email" id="txtEmail">
+                                </div>
+
+                                <label class="control-label col-lg-1 col-md-2 col-sm-3 col-xs-12">Telefone</label>
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" placeholder="Pesquise por telefone" id="txtTelefone">
+                                </div>
+                            </div>
+
+                            @Html.Partial("_SelecionarPlano")
+                            @Html.Partial("_SelecionarModeloEmail")
+
+                            <hr class="linhaPontilhada" />
+                            <h4 class="text-primary">Filtrar por dados da assinatura</h4>
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-12">Plano</label>
+                                <div class="col-lg-9 col-md-10 col-sm-9 col-xs-12">
+                                    <div class="input-group">
+                                        <input type="hidden" id="txtIdPlano" class="txtIdPlano" />
+                                        <input class="form-control txtNomePlano" readonly="readonly" type="text" id="txtNomePlano" />
+                                        <div class="input-group-btn">
+                                            <button id="btnBuscarPlano" type="button" class="btn btn-primary"><i class="fa fa-search"></i> Pesquisar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4 col-md-5 col-sm-6 col-xs-10">Apenas assinantes do clube de descontos</label>
+                                <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                                    <input type="checkbox" class="checkbox" id="chClubeDesconto" style="margin-top:5px">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-12">Assinados de</label>
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" id="txtCriacaoInicial">
+                                </div>
+
+                                <label class="control-label col-lg-1 col-md-2 col-sm-3 col-xs-12">Até</label>
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" id="txtCriacaoFinal">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-12">Código</label>
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" placeholder="Pesquise por código da assinatura" id="txtCodigo">
+                                </div>
+
+                                <label class="control-label col-lg-1 col-md-2 col-sm-3 col-xs-12">Status</label>
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    <select class="form-control" id="optStatus">
+                                        <option value="">Selecione</option>
+                                        @{
+                                            for (int i = 1; i < Enum.GetNames(typeof(AaanoEnum.PagSeguroEnum.StatusAssinatura)).Length - 1; i++)
+                                            {
+                                                <option value="@i.ToString()">@(((AaanoEnum.PagSeguroEnum.StatusAssinatura)i).ToString().Replace("_", " "))</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-3 col-lg-4 col-md-4 col-sm-9 col-xs-12">
+
+                                    <div class="">
+                                        <button class="btn btn-primary" id="btnBuscarAssinaturas" type="button"><i class="fa fa-search"></i> Buscar</button>
+
+                                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            Opções
+                                            <span class="fa fa-caret-down"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li title="Forçar sincronização com pagseguro"><a id="btnSincronizar"><i class="fa fa-retweet"></i> Sincronizar</a></li>
+                                            <li><a id="btnExportar"><i class="fa fa-download"></i> Exportar (excel)</a></li>
+                                            <li><a id="btnEnviaEmail"><i class="fa fa-send-o "></i> Enviar email</a></li>
+                                            @*<li class="divider"></li>
+                                                <li><a href="#">Separated link</a></li>*@
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-12">Ordenar por</label>
+                                <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                    <select id="optCampoOrdem" class="form-control">
+                                        <option value="NOMEASSINANTE">Nome</option>
+                                        <option value="DATACRIACAO">Criação</option>
+                                        <option value="REFERENCIAPLANO">Plano</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overlay" id="divCarregando">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <h3 class="box-title">Lista de assinaturas cadastradas</h3>
+                                </div>
+                                <div class="col-md-6 alinhadoDireita">
+                                    <h3 class="box-title" id="lbTotResultados" style="padding-right:5px"><b>Encontradas: </b></h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body table-responsive">
+                            <table class="table table-hover" id="tblResultados">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Assinante</th>
+                                        <th>Criação</th>
+                                        <th>Cód. Plano</th>
+                                        <th>Telefone</th>
+                                        <th>Email</th>
+                                        <th>Opções</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                        <div class="box-footer clearfix" id="divPaginas">
+                            @*Paginação da pesquisa*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/ClubeAaanoSite/plugins/jQueryUI/toastr.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/Geral.js?version=2"></script>
+<script src="~/Scripts/ClubeAaanoSite/plugins/mask/jquery.mask.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/IndexAssinaturaPagSeguro.js?version=2"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/SincronizacaoPagSeguro.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/SelecionarModeloEmail.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var retorno = '@TempData["Retorno"]';
+        MostrarMensagemRetorno(retorno, "A assinatura");
+        var filtros = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Filtros));;
+        LerFiltroIniciais(filtros, BuscarAssinaturas);
+
+        $("#txtTelefone").mask("(99) 9999-99999", { placeholder: "(__) _____-____" });
+        $("#txtCriacaoInicial").mask("99/99/9999", { placeholder: "__/__/____" });
+        $("#txtCriacaoFinal").mask("99/99/9999", { placeholder: "__/__/____" });
+
+        $("#btnBuscarAssinaturas").click(function () { BuscarAssinaturas(1); });
+        $("#btnSincronizar").click(function () { SincronizarAssinaturas(); });
+
+        $("#btnExportar").click(function () { ExportarAssinaturas(); });
+
+        $("#btnBuscarPlano").click(function () {
+            var botao = $("#btnBuscarPlano").html();
+            if (botao.indexOf("Pesquisar") !== -1) {
+                ExibirModelPesquisaPlano();
+            } else {
+                $("#txtIdPlano").val("");
+                $("#txtNomePlano").val("");
+                $("#btnBuscarPlano").html("<i class='fa fa-search'></i> Pesquisar");
+            }
+        });
+
+        $("#btnEnviaEmail").click(function () {
+            ExibirModelPesquisaModeloEmail();
+        });
+
+        $(document).keypress(function (e) {
+            $("#txtResumoModeloEmailSelecao").keyup(function (event) {
+                // Se for a tecla enter
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode === '13' || keycode === 13) {
+                    $("#btnBuscarModelosEmailSelecao").click();
+                    $("#txtResumoModeloEmailSelecao").focus();
+                }
+            });
+
+            if (e.keyCode === 13) {
+                if (e.target.id == "txtAssuntoModeloEmailSelecao") {
+                    $("#btnBuscarModelosEmailSelecao").click();
+                    setTimeout(function () { $('input[id="txtAssuntoModeloEmailSelecao"]').focus() }, 500);
+                } else {
+                    $("#btnBuscarAssinaturas").click();
+                }
+            }
+        });
+    });
+</script>

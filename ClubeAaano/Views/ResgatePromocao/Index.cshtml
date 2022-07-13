@@ -1,0 +1,205 @@
+﻿@{
+    ViewBag.Title = "Resgate de promoções";
+
+    if (SessaoUsuario.SessaoLogin.Administrador)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutTop.cshtml";
+    }
+}
+
+<div class="content-wrapper">
+    <div class="form-horizontal">
+        <div class="content-header">
+            <h1>
+                Resgate de promoções
+                <small>Regatar</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="~/Usuario/Inicio"><i class="fa fa-home"></i> Inicio</a></li>
+                <li><a class="active"><i class="fa fa-qrcode"></i> Resgate de promoções</a></li>
+            </ol>
+        </div>
+
+        <div class="content">
+            <div class="row">
+                <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Pesquisa de assinante</h3>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-12">Código</label>
+                                <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" placeholder="Pesquise por código" id="txtCodigoSimplificado" maxlength="6">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2 col-md-2 col-sm-3 col-xs-12">Assinante</label>
+                                <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+                                    <input type="text" class="form-control" autocomplete="off" readonly="readonly" id="txtNomeAssinante">
+                                </div>
+                            </div>
+
+                            @Html.Partial("_SelecionarAssinatura")
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-3 col-lg-10 col-md-10 col-sm-9 col-xs-12">
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalLerQrCode"><i class="fa fa-qrcode"></i></button>
+                                    <button type="button" class="btn btn-primary" id="btnBuscaAvancada"><i class="fa fa-search"></i> Busca avançada</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overlay" id="divCarregando">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <h3 class="box-title">Lista de promoções disponíveis</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box-body table-responsive">
+                            <table class="table table-hover" id="tblResultados">
+                                <thead>
+                                    <tr>
+                                        <th>Resumo</th>
+                                        <th>Validade</th>
+                                        <th>Loja</th>
+                                        <th>Opções</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                        <div class="overlay" id="divCarregandoResgate">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Histórico de resgates</h3>
+                        </div>
+                        <table class="table table-hover" id="tblHistorico">
+                            <thead>
+                                <tr>
+                                    <th>Resumo</th>
+                                    <th>Resgate</th>
+                                    <th>Loja</th>
+                                    <th>Usuário</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="box-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modalLerQrCode">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">Leitor de QR Code</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div id="qr-reader">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" id="btnCancelarLeitura">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/ClubeAaanoSite/plugins/jQueryUI/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/plugins/jQueryUI/toastr.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/Geral.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/plugins/mask/jquery.mask.min.js"></script>
+<script src="~/Scripts/ClubeAaanoSite/Telas/IndexResgatePromocao.js?version=2"></script>
+<script src="~/Scripts/ClubeAaanoSite/plugins/QrCode/html5-qrcode.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        EsconderCarregando("divCarregando");
+        EsconderCarregando("divCarregandoResgate");
+        $("#txtCodigoSimplificado").focus();
+
+        $("#txtCodigoSimplificado").keyup(function () {
+            if ($("#txtCodigoSimplificado").val().length === 6) {
+                BuscarPromocoesPorCodigoAssinatura();
+            }
+        });
+
+        $("#btnBuscaAvancada").click(function () {
+            ExibirModelPesquisaAssinatura();
+        });
+
+        $("#btnCancelarLeitura").click(function () {
+            FecharLeituraQrCode();
+        });
+
+        // Ler QR Code
+        var ultimoCodigoLido;
+        function sucessoQrCode(codigoLido) {
+            if (codigoLido !== ultimoCodigoLido) {
+                ultimoCodigoLido = codigoLido;
+                if (codigoLido.length === 6) {
+                    $("#txtCodigoSimplificado").val(codigoLido);
+                    BuscarPromocoesPorCodigoAssinatura();
+                    FecharLeituraQrCode();
+                } else {
+                    swal({
+                        title: "Ops...",
+                        text: "O código lido não é válido, por favor tente novamente.",
+                        icon: "warning",
+                        button: "Ok",
+                    });
+                }
+            }
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", { fps: 10, qrbox: 250 });
+
+        html5QrcodeScanner.render(sucessoQrCode);
+        $("#btnObterPermissaoCamera").click();
+
+        $(document).keypress(function (e) {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>

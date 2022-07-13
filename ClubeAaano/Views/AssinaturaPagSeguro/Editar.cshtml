@@ -1,0 +1,198 @@
+﻿@model ClubeAaanoSite.Models.AssinaturaPagSeguroModel
+
+@{
+    ViewBag.Title = "Editar assinatura";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+    <div class="content-header">
+        <h1>
+            Assinatura
+            <small>Editar</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="~/Usuario/Inicio"><i class="fa fa-home"></i> Inicio</a></li>
+            <li><a href="~/AssinaturaPagSeguro/Index"><i class="fa fa-users"></i> Assinaturas</a></li>
+            <li class="active"><i class="fa fa-pencil"></i> Editar</li>
+        </ol>
+    </div>
+
+    <div class="content">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h2 class="box-title">Editar informações da assinatura</h2>
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        <div class="box-body">
+                            <div class="form-horizontal">
+
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(m => m.Id)
+                                @Html.HiddenFor(m => m.IdPlano)
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.NomeAssinate, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                        @Html.EditorFor(m => m.NomeAssinate, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.NomeAssinate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Telefone, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                        @Html.EditorFor(m => m.Telefone, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    @Html.LabelFor(m => m.Email, new { @class = "control-label col-lg-2 col-md-1 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+                                        @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <hr class="linhaPontilhada" />
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Cep, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-11" })
+                                    <div class="col-lg-3 col-md-4 col-sm-7 col-xs-12">
+                                        @Html.EditorFor(m => m.Cep, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.Cep, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Logradouro, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-9 col-md-10 col-sm-9 col-xs-12">
+                                        @Html.EditorFor(m => m.Logradouro, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.Logradouro, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Bairro, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+                                        @Html.EditorFor(m => m.Bairro, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.Bairro, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    @Html.LabelFor(m => m.Cidade, new { @class = "control-label col-lg-1 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+                                        @Html.EditorFor(m => m.Cidade, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.Cidade, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Numero, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                        @Html.EditorFor(m => m.Numero, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.Numero, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    @Html.LabelFor(m => m.Complemento, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+                                        @Html.EditorFor(m => m.Complemento, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.Complemento, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Estado, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-3 col-md-4 col-sm-9 col-xs-12">
+                                        @Html.EditorFor(m => m.Estado, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    @Html.LabelFor(m => m.Pais, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12">
+                                        @Html.EditorFor(m => m.Pais, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => m.Pais, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <hr class="linhaPontilhada" />
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.CodigoSimplificado, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                        @Html.EditorFor(m => m.CodigoSimplificado, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(m => m.CodigoSimplificado, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    @Html.LabelFor(m => m.ReferenciaPlano, new { @class = "control-label col-lg-3 col-md-4 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                                        @Html.EditorFor(m => m.ReferenciaPlano, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(m => m.ReferenciaPlano, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                @{
+                                    List<SelectListItem> listaStatus = new List<SelectListItem>();
+                                    for (int i = 1; i < Enum.GetNames(typeof(AaanoEnum.PagSeguroEnum.StatusAssinatura)).Length; i++)
+                                    {
+                                        listaStatus.Add(new SelectListItem()
+                                        {
+                                            Text = ((AaanoEnum.PagSeguroEnum.StatusAssinatura)i).ToString().Replace("_", " "),
+                                            Value = i.ToString()
+                                        });
+                                    }
+                                }
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Status, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        @Html.DropDownListFor(m => m.Status, listaStatus, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Criacao, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+                                        @Html.EditorFor(m => m.Criacao, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(m => m.Criacao, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    @Html.LabelFor(m => m.UltimoEnventoRegistrado, new { @class = "control-label col-lg-2 col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-lg-3 col-md-4 col-sm-3 col-xs-12">
+                                        @Html.EditorFor(m => m.UltimoEnventoRegistrado, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(m => m.UltimoEnventoRegistrado, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="box-footer">
+                                    <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-3">
+                                        <a class="btn btn-default" href="~/AssinaturaPagSeguro/Index"><i class="fa fa-mail-reply"></i> Cancelar</a>
+                                        <button type="submit" class="btn btn-primary" data-toggle="modal"><i class="fa fa-save"></i> Gravar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/ClubeAaanoSite/plugins/mask/jquery.mask.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $("#Cep").mask("99999-999");
+        $("#Telefone").mask("(99) 9999-99999", { placeholder: "(__) _____-____" });
+
+        $(document).keypress(function (e) {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    });
+</script>
