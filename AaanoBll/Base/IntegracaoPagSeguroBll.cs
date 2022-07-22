@@ -39,7 +39,7 @@ namespace AaanoBll.Base
         /// <returns></returns>
         private static string RetornarTokenPagSeguro()
         {
-            return "d6773482-7631-483e-a308-e416b37084dfd9721d242eaa7302091f4ddba217f0a526d-750b-4ab2-a223-c49bf55443abc";
+            return "xxxxxxx";
         }
 
         /// <summary>
